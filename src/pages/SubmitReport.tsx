@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { store } from '../lib/store';
 import { cn } from '../lib/utils';
 import { Send, Calendar, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { format, startOfWeek } from 'date-fns';
+import { format } from 'date-fns';
 
 export default function SubmitReport() {
     const { user } = useAuth();
@@ -13,8 +13,8 @@ export default function SubmitReport() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    // Default to the start of the current week (Monday)
-    const defaultWeekStart = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
+    // Default to today
+    const defaultWeekStart = format(new Date(), 'yyyy-MM-dd');
 
     const [formData, setFormData] = useState({
         week_start_date: defaultWeekStart,
@@ -83,7 +83,7 @@ export default function SubmitReport() {
                 {/* Date Section */}
                 <div>
                     <label htmlFor="week_start_date" className="block text-sm font-medium text-gray-700 mb-1">
-                        Week Starting Date
+                        Reporting Date
                     </label>
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -99,7 +99,7 @@ export default function SubmitReport() {
                             className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"
                         />
                     </div>
-                    <p className="mt-1 text-xs text-gray-500">Usually the Monday of the week being reported.</p>
+                    <p className="mt-1 text-xs text-gray-500">The date of the report.</p>
                 </div>
 
                 {/* Summary */}
