@@ -1,0 +1,11 @@
+
+> weekly-report-app@0.0.0 build
+> tsc && vite build
+
+src/components/Layout.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/pages/Admin.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/pages/Admin.tsx(5,18): error TS6133: 'CheckCircle' is declared but its value is never read.
+src/pages/Admin.tsx(5,31): error TS6133: 'XCircle' is declared but its value is never read.
+src/pages/Admin.tsx(6,1): error TS6133: 'format' is declared but its value is never read.
+src/pages/Dashboard.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/pages/SubmitReport.tsx(7,31): error TS6133: 'subDays' is declared but its value is never read.
