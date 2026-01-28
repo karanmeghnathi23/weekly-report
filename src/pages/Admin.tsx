@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { store } from '../lib/store';
 import { WeeklyReport } from '../lib/types';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Download } from 'lucide-react';
 
 export default function Admin() {
   const { user } = useAuth();
@@ -36,17 +36,74 @@ export default function Admin() {
     setReports(reports.map(r => r.id === id ? { ...r, status: newStatus } : r));
   };
 
+  const downloadCSV = () => {
+    if (reports.length === 0) return;
+
+    // Define headers
+    const headers = [
+      'Lead Name',
+      'Committee',
+      'Week Date',
+      'Work Summary',
+      'Faculty Meeting Summary',
+      'Next Week Plans',
+      'Remarks',
+      'Status',
+      'Submission Date'
+    ];
+
+    // Map data to rows
+    const rows = reports.map(report => [
+      report.user_name,
+      report.committee,
+      report.week_start_date,
+      `"${report.summary?.replace(/"/g, '""') || ''}"`, // Escape quotes
+      `"${report.challenges?.replace(/"/g, '""') || ''}"`,
+      `"${report.plans_for_next_week?.replace(/"/g, '""') || ''}"`,
+      `"${report.remarks?.replace(/"/g, '""') || ''}"`,
+      report.status,
+      new Date(report.created_at).toLocaleDateString()
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+
+    // Create download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `weekly_reports_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (user?.role !== 'admin') {
     return <div className="p-8 text-red-600">Access Denied</div>;
   }
 
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-      <div className="p-6 border-b border-gray-200 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-gray-800">Report Management</h2>
-        <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
-          Total: {reports.length}
-        </span>
+      <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-bold text-gray-800">Report Management</h2>
+          <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+            Total: {reports.length}
+          </span>
+        </div>
+        <button
+          onClick={downloadCSV}
+          disabled={reports.length === 0}
+          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+        >
+          <Download className="h-4 w-4" />
+          Export CSV
+        </button>
       </div>
 
       {loading ? (
