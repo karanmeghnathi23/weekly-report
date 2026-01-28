@@ -94,9 +94,9 @@ export default function SubmitReport() {
                             name="week_start_date"
                             id="week_start_date"
                             required
+                            readOnly
                             value={formData.week_start_date}
-                            onChange={handleChange}
-                            className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"
+                            className="pl-10 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed sm:text-sm p-2 border"
                         />
                     </div>
                     <p className="mt-1 text-xs text-gray-500">The date of the report.</p>
