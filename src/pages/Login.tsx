@@ -13,7 +13,7 @@ export default function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-        const err = await signIn(username, password);
+        const err = await signIn(username.trim(), password.trim());
         if (err) {
             setError(err);
         } else {
