@@ -15,6 +15,7 @@ export interface WeeklyReport {
     user_name: string; // Denormalized for simpler list views
     committee: string;
     week_start_date: string; // ISO Date YYYY-MM-DD
+    week_end_date?: string; // ISO Date YYYY-MM-DD
     summary: string;
     challenges: string;
     plans_for_next_week: string;

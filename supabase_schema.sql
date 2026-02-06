@@ -6,6 +6,7 @@ CREATE TABLE weekly_reports (
   user_name TEXT NOT NULL,
   committee TEXT NOT NULL,
   week_start_date DATE NOT NULL,
+  week_end_date DATE,
   summary TEXT NOT NULL,
   challenges TEXT,
   plans_for_next_week TEXT,

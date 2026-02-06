@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { store } from '../lib/store';
 import { cn } from '../lib/utils';
 import { Send, Calendar, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 
 export default function SubmitReport() {
     const { user } = useAuth();
@@ -18,6 +18,7 @@ export default function SubmitReport() {
 
     const [formData, setFormData] = useState({
         week_start_date: defaultWeekStart,
+        week_end_date: format(addDays(new Date(), 6), 'yyyy-MM-dd'),
         summary: '',
         challenges: '',
         plans_for_next_week: '',

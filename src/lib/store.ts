@@ -96,6 +96,19 @@ export const store = {
         }
     },
 
+    updateReport: async (reportId: string, updates: Partial<WeeklyReport>): Promise<{ error: string | null }> => {
+        const { error } = await supabase
+            .from('weekly_reports')
+            .update(updates)
+            .eq('id', reportId);
+
+        if (error) {
+            console.error('Error updating report:', error);
+            return { error: error.message };
+        }
+        return { error: null };
+    },
+
     deleteReport: async (reportId: string): Promise<void> => {
         const { error } = await supabase
             .from('weekly_reports')
@@ -105,5 +118,5 @@ export const store = {
         if (error) {
             console.error('Error deleting report:', error);
         }
-    }
+    },
 };
